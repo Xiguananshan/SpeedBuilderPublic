@@ -1,0 +1,10 @@
+name: SpeedBuilder
+version: '1.0-SNAPSHOT'
+
+main: plugin.xiguananshan.speedBuilder.SpeedBuilder
+api-version: '26.1'
+commands:
+  back:
+    description: Back to main labby.
+  end:
+    description: save the structure.
