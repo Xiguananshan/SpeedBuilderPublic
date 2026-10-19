@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.structure.Palette;
 
+import plugin.xiguananshan.speedBuilder.SpeedBuilder;
 import plugin.xiguananshan.speedBuilder.StairsVisualComparator;
 import plugin.xiguananshan.speedBuilder.ToolClass;
 
@@ -101,6 +102,7 @@ public class GameMain implements Runnable{
                     e.printStackTrace();
                 }
                 Random random = new Random();
+
                 int inx;
                 if(ToolClass.problems.size() >= all_structures.size()){
                     ToolClass.problems.clear();
@@ -132,6 +134,22 @@ public class GameMain implements Runnable{
                 for(int i = 0;i< ToolClass.playing_player.size();i++){
                     if(ToolClass.died_player.contains(ToolClass.playing_player.get(i))){
                         continue;
+                    }
+                    Material material;
+                    String name = SpeedBuilder.getPlugin(SpeedBuilder.class).getConfig().getString(ToolClass.getBaseName(all_structures.get(inx)));
+                    if(name == null){
+                        material = Material.WHITE_CONCRETE;
+                    }else{
+                        try{
+                            material = Material.valueOf(name);
+                        } catch (IllegalArgumentException e) {
+                            material = Material.WHITE_CONCRETE;
+                        }
+                    }
+                    for(int x = 4+30*i;x<=4+30*i+6;x++){
+                        for(int z = 4;z<=10;z++){
+                            Bukkit.getWorld("world").setBlockData(x,200,z,Bukkit.createBlockData(material));
+                        }
                     }
                     ToolClass.now_structure.place(new Location(Bukkit.getWorld("world"),4+30*i,201,4),false, StructureRotation.NONE, Mirror.NONE,0,1.0f,new Random());
 

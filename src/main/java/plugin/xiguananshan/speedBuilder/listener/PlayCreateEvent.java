@@ -32,8 +32,13 @@ public class PlayCreateEvent implements Listener {
                                 }
                                 ToolClass.creating_player = e.getPlayer();
                                 e.getPlayer().teleport(new Location(e.getPlayer().getWorld(), 0,100,0));
+                                for(int x = 0;x<=6;x++){
+                                    for(int z = -6;z<=0;z++){
+                                        Bukkit.getWorld("world").setBlockData(x,99,z,Bukkit.createBlockData(Material.WHITE_CONCRETE));
+                                    }
+                                }
                                 e.getPlayer().sendMessage(ChatColor.YELLOW + "你现在正在出题，所有建筑的范围理应小于7*7*7");
-                                e.getPlayer().sendMessage(ChatColor.YELLOW + "输入/end指令可以保存题目，输入/back指令可取消出题");
+                                e.getPlayer().sendMessage(ChatColor.YELLOW + "输入/end指令可以保存题目，输入/back指令可取消出题，输入/set_ground可以设置地板方块");
                                 e.getPlayer().setGameMode(GameMode.CREATIVE);
                                 e.getPlayer().getInventory().clear();
                             }else{

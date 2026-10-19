@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import plugin.xiguananshan.speedBuilder.commands.BackCommand;
 import plugin.xiguananshan.speedBuilder.commands.EndCommand;
+import plugin.xiguananshan.speedBuilder.commands.SetGroundCommand;
 import plugin.xiguananshan.speedBuilder.commands.StartCommand;
 import plugin.xiguananshan.speedBuilder.listener.*;
 import plugin.xiguananshan.speedBuilder.ticks.CreateMoveCheck;
@@ -17,7 +18,7 @@ public final class SpeedBuilder extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        ToolClass.Init();
+
         getServer().getPluginManager().registerEvents(new PlayerJoinEventListener(),this);
         getServer().getPluginManager().registerEvents(new ExplodeEventListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerBreakBlockEventListener(),this);
@@ -33,13 +34,17 @@ public final class SpeedBuilder extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDamageEventListener(),this);
         getServer().getPluginManager().registerEvents(new BlockPositionEventListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerDropItemListener(),this);
+        getServer().getPluginManager().registerEvents(new PlayerClickInvEventListener(),this);
         getCommand("back").setExecutor(new BackCommand());
         getCommand("end").setExecutor(new EndCommand());
         getCommand("start").setExecutor(new StartCommand());
+        getCommand("set_ground").setExecutor(new SetGroundCommand());
         getServer().getScheduler().runTaskTimer(this,new CreateMoveCheck(),0,1);
         getServer().getScheduler().runTaskTimer(this,new PlayQueueManager(),0,1);
         getServer().getScheduler().runTaskTimer(this,new GameMain(),0,1);
         saveDefaultConfig();
+        ToolClass.Init();
+        //System.out.println(ToolClass.grounds_list.size());
         // Plugin startup logic
     }
 

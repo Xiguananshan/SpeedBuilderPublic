@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.TileState;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -27,6 +28,7 @@ public class ToolClass {
     public static List<Player> wait_player = new ArrayList<>();
     public static Map<Player,Integer> destroy_tick = new HashMap<>();
     public static int start_time = 30;
+    public static int ground_page = 1;
     public static List<Player> playing_player = new ArrayList<>();
     public static boolean playing = false;
     public static boolean is_building = false;
@@ -37,6 +39,9 @@ public class ToolClass {
     public static HashSet<String> problems = new HashSet<>();
     public static int global_time = 60;
     public static List<Material> grounds_list = new ArrayList<>();
+    public static ItemStack deny = new ItemStack(Material.BARRIER);
+    public static ItemStack prev = new ItemStack(Material.ARROW);
+    public static ItemStack next = new ItemStack(Material.PAPER);
     public static void Init(){
         ItemMeta meta = create.getItemMeta();
         assert meta != null;
@@ -58,21 +63,35 @@ public class ToolClass {
         meta1.setLore(List.of(ChatColor.GREEN + "右键进行退出"));
         meta1.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"target"), PersistentDataType.BOOLEAN,true);
         cancel.setItemMeta(meta1);
+
+        meta1 = deny.getItemMeta();
+        assert meta1 != null;
+        meta1.setDisplayName(" ");
+        meta1.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"target"), PersistentDataType.BOOLEAN,true);
+        deny.setItemMeta(meta1);
+
+        meta1 = prev.getItemMeta();
+        assert meta1 != null;
+        meta1.setDisplayName(ChatColor.YELLOW + "上一页");
+        meta1.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"target"), PersistentDataType.BOOLEAN,true);
+        prev.setItemMeta(meta1);
+
+
+
+        meta1 = next.getItemMeta();
+        assert meta1 != null;
+        meta1.setDisplayName(ChatColor.YELLOW + "下一页");
+        meta1.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"target"), PersistentDataType.BOOLEAN,true);
+        next.setItemMeta(meta1);
         for(Material material : Material.values()){
             if(!material.isAir()){
-                if(material.isBlock()){
+                if(material.isBlock() && material.isItem()){
                     BlockData blockData = Bukkit.createBlockData(material);
-                    Bukkit.getWorld("world").setBlockData(1000,0,1000,blockData);
-                    VoxelShape shape = Bukkit.getWorld("world").getBlockAt(1000,0,1000).getCollisionShape();
-                    if(shape.getBoundingBoxes().size() == 1){
-                        BoundingBox boundingBox = Bukkit.getWorld("world").getBlockAt(1000,0,1000).getBoundingBox();
-                        if(boundingBox.getWidthX() == 1.0 && boundingBox.getHeight() == 1.0 && boundingBox.getWidthZ() == 1.0){
-                            if(!(Bukkit.getWorld("world").getBlockAt(1000,0,1000).getState() instanceof TileState)){
-                                grounds_list.add(material);
-                            }
 
+                    if(blockData.isOccluding()){
+                        if(!(blockData.createBlockState() instanceof TileState)){
+                            grounds_list.add(blockData.getMaterial());
                         }
-
                     }
                 }
             }
@@ -82,5 +101,43 @@ public class ToolClass {
         String name = file.getName();
         int dot = name.lastIndexOf('.');
         return (dot > 0) ? name.substring(0, dot) : name;
+    }
+    public static List<Material> GetPage(int index){
+        List<Material> materials = new ArrayList<>();
+        for(int i = 45*(index-1);i<=45*(index-1)+44;i++){
+            if(i<grounds_list.size()){
+                materials.add(grounds_list.get(i));
+            }else{
+                break;
+            }
+        }
+        return materials;
+    }
+    public static Inventory GetGroundInv(int page){
+        List<Material> materials = GetPage(page);
+        Inventory ans = Bukkit.createInventory(null,54,"选择地板方块");
+        for(int i = 0;i<54;i++){
+            ans.setItem(i,deny);
+        }
+        for(int i = 0;i<materials.size();i++){
+            ans.setItem(i,BuildGroundItem(materials.get(i)));
+        }
+        if(page >= 2){
+            ans.setItem(45,prev);
+        }
+        if(materials.size() == 45){
+            ans.setItem(53,next);
+        }
+        return ans;
+    }
+
+    public static ItemStack BuildGroundItem(Material material){
+        ItemStack ans = new ItemStack(material);
+        ItemMeta meta = ans.getItemMeta();
+        assert meta != null;
+        meta.setLore(List.of(ChatColor.YELLOW + "点击选择"));
+        meta.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"ground"),PersistentDataType.BOOLEAN,true);
+        ans.setItemMeta(meta);
+        return ans;
     }
 }

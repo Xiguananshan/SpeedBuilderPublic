@@ -1,9 +1,6 @@
 package plugin.xiguananshan.speedBuilder.listener;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,6 +38,10 @@ public class PlayerChatEventListener implements Listener {
                         ToolClass.create_structure = null;
                         ToolClass.creating_player = null;
                         p.setGameMode(GameMode.ADVENTURE);
+                        Material material = Bukkit.getWorld("world").getType(0,99,-6);
+                        SpeedBuilder.getPlugin(SpeedBuilder.class).getConfig().set(e.getMessage(),material.toString());
+                        SpeedBuilder.getPlugin(SpeedBuilder.class).saveConfig();
+                        SpeedBuilder.getPlugin(SpeedBuilder.class).reloadConfig();
                     }else{
                         e.getPlayer().sendMessage(ChatColor.RED + "目标建筑已存在");
                     }
