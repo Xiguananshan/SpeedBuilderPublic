@@ -3,10 +3,11 @@ package plugin.xiguananshan.speedBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerDropItemEvent;
+
 import org.bukkit.plugin.java.JavaPlugin;
 import plugin.xiguananshan.speedBuilder.commands.BackCommand;
 import plugin.xiguananshan.speedBuilder.commands.EndCommand;
+import plugin.xiguananshan.speedBuilder.commands.StartCommand;
 import plugin.xiguananshan.speedBuilder.listener.*;
 import plugin.xiguananshan.speedBuilder.ticks.CreateMoveCheck;
 import plugin.xiguananshan.speedBuilder.ticks.GameMain;
@@ -34,9 +35,11 @@ public final class SpeedBuilder extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDropItemListener(),this);
         getCommand("back").setExecutor(new BackCommand());
         getCommand("end").setExecutor(new EndCommand());
+        getCommand("start").setExecutor(new StartCommand());
         getServer().getScheduler().runTaskTimer(this,new CreateMoveCheck(),0,1);
         getServer().getScheduler().runTaskTimer(this,new PlayQueueManager(),0,1);
         getServer().getScheduler().runTaskTimer(this,new GameMain(),0,1);
+        saveDefaultConfig();
         // Plugin startup logic
     }
 

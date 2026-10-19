@@ -7,4 +7,6 @@ commands:
   back:
     description: Back to main labby.
   end:
-    description: save the structure.
+    description: Save the structure.
+  start:
+    description: Start the game.

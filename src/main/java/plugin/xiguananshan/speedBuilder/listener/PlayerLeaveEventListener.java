@@ -26,8 +26,7 @@ public class PlayerLeaveEventListener  implements Listener {
                     }
                 }
             }
-            ToolClass.playing_player.remove(e.getPlayer());
-            ToolClass.died_player.remove(e.getPlayer());
+            ToolClass.died_player.add(e.getPlayer());
         }
 
     }
