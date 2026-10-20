@@ -33,6 +33,7 @@ public final class SpeedBuilder extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerDropItemListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerClickInvEventListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerClickBlockEventListener(),this);
+        getServer().getPluginManager().registerEvents(new PlayerExerciseEventListener(),this);
         getCommand("back").setExecutor(new BackCommand());
         getCommand("end").setExecutor(new EndCommand());
         getCommand("start").setExecutor(new StartCommand());

@@ -6,7 +6,11 @@ import org.bukkit.*;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.type.Bed;
+import org.bukkit.block.data.type.SmallDripleaf;
 import org.bukkit.block.data.type.Stairs;
+import org.bukkit.block.data.type.TrapDoor;
 import org.bukkit.block.structure.Mirror;
 import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.entity.Player;
@@ -189,7 +193,21 @@ public class GameMain implements Runnable{
                         states.addAll(palette.getBlocks());
                     }
                     for(BlockState state : states){
-                        ToolClass.playing_player.get(i).getInventory().addItem(new ItemStack(state.getType()));
+                        if(state.getBlockData() instanceof Bed b){
+                            if(b.getPart() == Bed.Part.HEAD){
+                                ToolClass.playing_player.get(i).getInventory().addItem(new ItemStack(state.getType()));
+                            }
+
+                        }else if(state.getBlockData() instanceof Bisected b){
+                            if(state.getBlockData() instanceof Stairs || state.getBlockData() instanceof TrapDoor || state.getBlockData() instanceof SmallDripleaf){
+                                ToolClass.playing_player.get(i).getInventory().addItem(new ItemStack(state.getType()));
+                            }else if(b.getHalf() == Bisected.Half.BOTTOM){
+                                ToolClass.playing_player.get(i).getInventory().addItem(new ItemStack(state.getType()));
+                            }
+                        }else{
+                            ToolClass.playing_player.get(i).getInventory().addItem(new ItemStack(state.getType()));
+                        }
+
                     }
                 }
                 ToolClass.is_building = true;

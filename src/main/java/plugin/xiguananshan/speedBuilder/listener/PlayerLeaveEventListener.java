@@ -28,6 +28,17 @@ public class PlayerLeaveEventListener  implements Listener {
             }
             ToolClass.died_player.add(e.getPlayer());
         }
+        if(ToolClass.exercise_player.containsKey(e.getPlayer())){
+            int k = ToolClass.exercise_player.get(e.getPlayer());
+            for(int x = 30*k;x<=30*k+14;x++){
+                for(int y = 150;y<=157;y++){
+                    for(int z = 0;z<=14;z++){
+                        Bukkit.getWorld("world").getBlockAt(x,y,z).setBlockData(Bukkit.createBlockData(Material.AIR),false);
+                    }
+                }
+            }
+            ToolClass.exercise_player.remove(e.getPlayer());
+        }
 
     }
 }

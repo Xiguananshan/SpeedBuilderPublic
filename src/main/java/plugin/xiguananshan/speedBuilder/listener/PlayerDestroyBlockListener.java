@@ -1,8 +1,9 @@
 package plugin.xiguananshan.speedBuilder.listener;
 
 import org.bukkit.*;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.type.Slab;
+import org.bukkit.block.data.type.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,6 +36,10 @@ public class PlayerDestroyBlockListener implements Listener {
             }
 
 
+
+
+
+
             if(!ToolClass.destroy_tick.containsKey(p)){
 
 
@@ -44,8 +49,25 @@ public class PlayerDestroyBlockListener implements Listener {
                 if(isDoubleSlab){
                     p.getInventory().addItem(new ItemStack(e.getBlock().getType(),2));
                 }else{
-                    p.getInventory().addItem(new ItemStack(e.getBlock().getType(),1));
+                    if(blockData instanceof Bed b){
+                        if(b.getPart() == Bed.Part.HEAD){
+                            p.getInventory().addItem(new ItemStack(e.getBlock().getType(),1));
+                        }
+                    }else if(blockData instanceof Bisected b){
+                        if(blockData instanceof Stairs || blockData instanceof TrapDoor || blockData instanceof SmallDripleaf){
+                            p.getInventory().addItem(new ItemStack(e.getBlock().getType(),1));
+                        }else{
+                            if(b.getHalf() == Bisected.Half.BOTTOM){
+                                p.getInventory().addItem(new ItemStack(e.getBlock().getType(),1));
+                            }
+                        }
+
+                    }else{
+                        p.getInventory().addItem(new ItemStack(e.getBlock().getType(),1));
+                    }
+
                 }
+
 
                 Location particleLocation = e.getBlock().getLocation().add(0.5, 0.5, 0.5);
 

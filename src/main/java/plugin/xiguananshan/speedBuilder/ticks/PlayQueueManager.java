@@ -49,6 +49,7 @@ public class PlayQueueManager implements Runnable{
                             l.place(new Location(Bukkit.getWorld("world"),30*i,200,0),false, StructureRotation.NONE, Mirror.NONE,0,1f,new Random());
                             ToolClass.playing_player.get(i).teleport(new Location(Bukkit.getWorld("world"),30*i+3,201,3));
                             ToolClass.playing_player.get(i).setGameMode(GameMode.ADVENTURE);
+                            ToolClass.playing_player.get(i).playSound(ToolClass.playing_player.get(i),Sound.ENTITY_PLAYER_LEVELUP,1,1);
                         }
                     }
                 }

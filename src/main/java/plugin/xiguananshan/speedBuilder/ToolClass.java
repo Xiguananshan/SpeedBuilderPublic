@@ -24,6 +24,7 @@ public class ToolClass {
     public static Structure create_structure = null;
     public static List<Player> wait_player = new ArrayList<>();
     public static Map<Player,Integer> destroy_tick = new HashMap<>();
+    public static Map<Player,Integer> exercise_player = new HashMap<>();
     public static int start_time = 30;
     public static int ground_page = 1;
     public static List<Player> playing_player = new ArrayList<>();
@@ -77,7 +78,7 @@ public class ToolClass {
 
         meta1 = exercise.getItemMeta();
         assert meta1 != null;
-        meta1.setDisplayName(ChatColor.GREEN + "练习");
+        meta1.setDisplayName(ChatColor.YELLOW + "练习");
         meta1.setLore(List.of(ChatColor.GREEN + "右键前往练习"));
         meta1.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"target"), PersistentDataType.BOOLEAN,true);
         exercise.setItemMeta(meta1);

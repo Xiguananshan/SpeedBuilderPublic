@@ -4,6 +4,7 @@ plugin\xiguananshan\speedBuilder\listener\PlayerDamageEventListener.class
 plugin\xiguananshan\speedBuilder\listener\PlayCreateEvent.class
 plugin\xiguananshan\speedBuilder\listener\PlayerLeaveEventListener.class
 plugin\xiguananshan\speedBuilder\listener\PlayerMOveEventListener.class
+plugin\xiguananshan\speedBuilder\listener\PlayerExerciseEventListener.class
 plugin\xiguananshan\speedBuilder\listener\PlayerClickInvEventListener.class
 plugin\xiguananshan\speedBuilder\commands\SetGroundCommand.class
 plugin\xiguananshan\speedBuilder\ticks\GameMain.class

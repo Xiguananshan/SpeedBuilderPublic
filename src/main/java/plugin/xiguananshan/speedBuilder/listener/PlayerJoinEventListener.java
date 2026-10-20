@@ -18,7 +18,7 @@ public class PlayerJoinEventListener implements Listener {
         p.getInventory().clear();
         p.getInventory().setItem(0, ToolClass.create);
         p.getInventory().setItem(1, ToolClass.play);
-
+        p.getInventory().setItem(2,ToolClass.exercise);
         p.sendTitle(ChatColor.GREEN + "欢迎来到速建练习服务器",ChatColor.YELLOW + "右键对应物品可以进行游玩",10,40,10);
         if(!p.isOp())
             p.setGameMode(GameMode.ADVENTURE);
