@@ -12,3 +12,5 @@ commands:
     description: Start the game.
   set_ground:
     description: Set the structure ground.
+  test:
+    description: test.

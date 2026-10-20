@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.structure.Palette;
 
+import org.bukkit.structure.Structure;
 import plugin.xiguananshan.speedBuilder.SpeedBuilder;
 import plugin.xiguananshan.speedBuilder.StairsVisualComparator;
 import plugin.xiguananshan.speedBuilder.ToolClass;
@@ -135,20 +136,24 @@ public class GameMain implements Runnable{
                     if(ToolClass.died_player.contains(ToolClass.playing_player.get(i))){
                         continue;
                     }
-                    Material material;
-                    String name = SpeedBuilder.getPlugin(SpeedBuilder.class).getConfig().getString(ToolClass.getBaseName(all_structures.get(inx)));
-                    if(name == null){
-                        material = Material.WHITE_CONCRETE;
-                    }else{
-                        try{
-                            material = Material.valueOf(name);
-                        } catch (IllegalArgumentException e) {
-                            material = Material.WHITE_CONCRETE;
+                    File ground_dir =  Paths.get("plugins/grounds/" + all_structures.get(inx) + ".nbt").toFile();
+                    if(ground_dir.exists()){
+                        try {
+                            Structure ground = Bukkit.getStructureManager().loadStructure(ground_dir);
+                            ground.place(new Location(Bukkit.getWorld("world"),4+30*i,200,4),false,StructureRotation.NONE,Mirror.NONE,0,1,new Random());
+                        } catch (IOException e) {
+                            for(int x = 4 + 30*i;x<=10 + 30*i;x++){
+                                for(int z = 4;z<=10;z++){
+                                    Bukkit.getWorld("world").getBlockAt(x,200,z).setBlockData(Bukkit.createBlockData(Material.WHITE_CONCRETE));
+                                }
+                            }
                         }
-                    }
-                    for(int x = 4+30*i;x<=4+30*i+6;x++){
-                        for(int z = 4;z<=10;z++){
-                            Bukkit.getWorld("world").setBlockData(x,200,z,Bukkit.createBlockData(material));
+
+                    }else{
+                        for(int x = 4 + 30*i;x<=10 + 30*i;x++){
+                            for(int z = 4;z<=10;z++){
+                                Bukkit.getWorld("world").getBlockAt(x,200,z).setBlockData(Bukkit.createBlockData(Material.WHITE_CONCRETE));
+                            }
                         }
                     }
                     ToolClass.now_structure.place(new Location(Bukkit.getWorld("world"),4+30*i,201,4),false, StructureRotation.NONE, Mirror.NONE,0,1.0f,new Random());

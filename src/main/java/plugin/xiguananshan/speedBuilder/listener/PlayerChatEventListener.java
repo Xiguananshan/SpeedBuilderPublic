@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.structure.Structure;
+import org.bukkit.util.BlockVector;
 import plugin.xiguananshan.speedBuilder.SpeedBuilder;
 import plugin.xiguananshan.speedBuilder.ToolClass;
 
@@ -22,6 +24,8 @@ public class PlayerChatEventListener implements Listener {
                 Bukkit.getScheduler().runTask(SpeedBuilder.getPlugin(SpeedBuilder.class),()->{
                     Path dir = Paths.get("plugins/buildings/" + e.getMessage() + ".nbt");
                     File file = dir.toFile();
+                    Path dir1 = Paths.get("plugins/grounds/" + e.getMessage() + ".nbt");
+                    File ground_dir = dir1.toFile();
                     if(!file.exists()){
                         try {
                             Bukkit.getStructureManager().saveStructure(file,ToolClass.create_structure);
@@ -38,10 +42,13 @@ public class PlayerChatEventListener implements Listener {
                         ToolClass.create_structure = null;
                         ToolClass.creating_player = null;
                         p.setGameMode(GameMode.ADVENTURE);
-                        Material material = Bukkit.getWorld("world").getType(0,99,-6);
-                        SpeedBuilder.getPlugin(SpeedBuilder.class).getConfig().set(e.getMessage(),material.toString());
-                        SpeedBuilder.getPlugin(SpeedBuilder.class).saveConfig();
-                        SpeedBuilder.getPlugin(SpeedBuilder.class).reloadConfig();
+                        Structure ground = Bukkit.getStructureManager().createStructure();
+                        ground.fill(new Location(Bukkit.getWorld("world"),0,99,-6),new BlockVector(7,1,7),false);
+                        try {
+                            Bukkit.getStructureManager().saveStructure(ground_dir,ground);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                     }else{
                         e.getPlayer().sendMessage(ChatColor.RED + "目标建筑已存在");
                     }

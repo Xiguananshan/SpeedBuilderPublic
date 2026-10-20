@@ -16,7 +16,10 @@ public class PlayerBreakBlockEventListener implements Listener {
             z = e.getBlock().getZ();
             if(!(0<=x&&x<=6 && 100<=y&&y<=106&&-6<=z&&z<=0)){
                 e.setCancelled(true);
-                e.getPlayer().sendMessage(ChatColor.RED + "不可修改的方块");
+                if(!(0<=x&&x<=6&&y==99&&-6<=z&&z<=0)){
+                    e.getPlayer().sendMessage(ChatColor.RED + "不可修改的方块");
+                }
+
             }
             if(ToolClass.create_structure != null){
                 e.setCancelled(true);

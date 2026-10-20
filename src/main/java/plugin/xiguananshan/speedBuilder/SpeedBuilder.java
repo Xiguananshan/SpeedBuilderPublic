@@ -5,10 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import plugin.xiguananshan.speedBuilder.commands.BackCommand;
-import plugin.xiguananshan.speedBuilder.commands.EndCommand;
-import plugin.xiguananshan.speedBuilder.commands.SetGroundCommand;
-import plugin.xiguananshan.speedBuilder.commands.StartCommand;
+import plugin.xiguananshan.speedBuilder.commands.*;
 import plugin.xiguananshan.speedBuilder.listener.*;
 import plugin.xiguananshan.speedBuilder.ticks.CreateMoveCheck;
 import plugin.xiguananshan.speedBuilder.ticks.GameMain;
@@ -35,10 +32,12 @@ public final class SpeedBuilder extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockPositionEventListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerDropItemListener(),this);
         getServer().getPluginManager().registerEvents(new PlayerClickInvEventListener(),this);
+        getServer().getPluginManager().registerEvents(new PlayerClickBlockEventListener(),this);
         getCommand("back").setExecutor(new BackCommand());
         getCommand("end").setExecutor(new EndCommand());
         getCommand("start").setExecutor(new StartCommand());
         getCommand("set_ground").setExecutor(new SetGroundCommand());
+        getCommand("test").setExecutor(new test());
         getServer().getScheduler().runTaskTimer(this,new CreateMoveCheck(),0,1);
         getServer().getScheduler().runTaskTimer(this,new PlayQueueManager(),0,1);
         getServer().getScheduler().runTaskTimer(this,new GameMain(),0,1);
