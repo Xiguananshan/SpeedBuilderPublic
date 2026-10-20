@@ -24,26 +24,13 @@ public class PlayerClickBlockEventListener implements Listener{
                         ItemStack stack = e.getItem();
                         if(stack != null){
                             Material material = stack.getType();
-                            if(!material.isAir()){
-                                if(material.isBlock() && material.isItem()){
-                                    BlockData blockData = Bukkit.createBlockData(material);
-
-                                    if(blockData.isOccluding()){
-                                        if(!(blockData.createBlockState() instanceof TileState)){
-                                            block.setBlockData(blockData,false);
-                                            e.setCancelled(true);
-                                            e.getPlayer().sendMessage(ChatColor.YELLOW + "地板方块已更换");
-                                        }
-                                    }else{
-                                        e.getPlayer().sendMessage(ChatColor.RED + "不允许该方块作为地板");
-                                        e.setCancelled(true);
-                                    }
-                                }else{
-                                    e.getPlayer().sendMessage(ChatColor.RED + "物品当地板的都来了");
-                                    e.setCancelled(true);
-                                }
+                            if(ToolClass.grounds_list.contains(material)){
+                                block.setBlockData(Bukkit.createBlockData(material));
+                                e.getPlayer().sendMessage(ChatColor.YELLOW + "目标地板方块已替换");
+                                e.setCancelled(true);
                             }else{
                                 e.setCancelled(true);
+                                e.getPlayer().sendMessage(ChatColor.RED + "无法选择该方块");
                             }
                         }
                     }

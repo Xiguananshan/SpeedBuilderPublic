@@ -132,15 +132,18 @@ public class GameMain implements Runnable{
                         }
                     }
                 }
+                File ground_dir =  new File(Bukkit.getWorldContainer(),"plugins/grounds/" + ToolClass.getBaseName(all_structures.get(inx) ) + ".nbt");
                 for(int i = 0;i< ToolClass.playing_player.size();i++){
                     if(ToolClass.died_player.contains(ToolClass.playing_player.get(i))){
                         continue;
                     }
-                    File ground_dir =  Paths.get("plugins/grounds/" + all_structures.get(inx) + ".nbt").toFile();
+
                     if(ground_dir.exists()){
+
                         try {
                             Structure ground = Bukkit.getStructureManager().loadStructure(ground_dir);
                             ground.place(new Location(Bukkit.getWorld("world"),4+30*i,200,4),false,StructureRotation.NONE,Mirror.NONE,0,1,new Random());
+
                         } catch (IOException e) {
                             for(int x = 4 + 30*i;x<=10 + 30*i;x++){
                                 for(int z = 4;z<=10;z++){

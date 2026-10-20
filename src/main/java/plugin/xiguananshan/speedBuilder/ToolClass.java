@@ -4,17 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
-import org.bukkit.block.TileState;
-import org.bukkit.block.data.BlockData;
+
 import org.bukkit.entity.Player;
+
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.structure.Structure;
-import org.bukkit.util.BoundingBox;
-import org.bukkit.util.VoxelShape;
 
 import java.io.File;
 import java.util.*;
@@ -42,6 +39,7 @@ public class ToolClass {
     public static ItemStack deny = new ItemStack(Material.BARRIER);
     public static ItemStack prev = new ItemStack(Material.ARROW);
     public static ItemStack next = new ItemStack(Material.PAPER);
+    public static ItemStack exercise = new ItemStack(Material.SNOWBALL);
     public static void Init(){
         ItemMeta meta = create.getItemMeta();
         assert meta != null;
@@ -64,6 +62,7 @@ public class ToolClass {
         meta1.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"target"), PersistentDataType.BOOLEAN,true);
         cancel.setItemMeta(meta1);
 
+
         meta1 = deny.getItemMeta();
         assert meta1 != null;
         meta1.setDisplayName(" ");
@@ -76,24 +75,24 @@ public class ToolClass {
         meta1.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"target"), PersistentDataType.BOOLEAN,true);
         prev.setItemMeta(meta1);
 
-
+        meta1 = exercise.getItemMeta();
+        assert meta1 != null;
+        meta1.setDisplayName(ChatColor.GREEN + "练习");
+        meta1.setLore(List.of(ChatColor.GREEN + "右键前往练习"));
+        meta1.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"target"), PersistentDataType.BOOLEAN,true);
+        exercise.setItemMeta(meta1);
 
         meta1 = next.getItemMeta();
         assert meta1 != null;
         meta1.setDisplayName(ChatColor.YELLOW + "下一页");
         meta1.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"target"), PersistentDataType.BOOLEAN,true);
         next.setItemMeta(meta1);
-        for(Material material : Material.values()){
-            if(!material.isAir()){
-                if(material.isBlock() && material.isItem()){
-                    BlockData blockData = Bukkit.createBlockData(material);
+        List<String> names = SpeedBuilder.getPlugin(SpeedBuilder.class).getConfig().getStringList("ground_blocks");
+        for(String m : names){
+            try {
+                grounds_list.add(Material.valueOf(m));
+            }catch (Exception e){
 
-                    if(blockData.isOccluding()){
-                        if(!(blockData.createBlockState() instanceof TileState)){
-                            grounds_list.add(blockData.getMaterial());
-                        }
-                    }
-                }
             }
         }
     }

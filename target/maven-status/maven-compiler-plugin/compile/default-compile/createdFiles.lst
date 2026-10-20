@@ -1,4 +1,5 @@
 plugin\xiguananshan\speedBuilder\commands\StartCommand.class
+plugin\xiguananshan\speedBuilder\listener\PlayerClickBlockEventListener.class
 plugin\xiguananshan\speedBuilder\listener\PlayerDamageEventListener.class
 plugin\xiguananshan\speedBuilder\listener\PlayCreateEvent.class
 plugin\xiguananshan\speedBuilder\listener\PlayerLeaveEventListener.class
