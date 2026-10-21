@@ -20,7 +20,7 @@ public class DoubleJumpListener implements Listener {
         e.setCancelled(true);
         p.setAllowFlight(false);
         p.setFlying(false);
-        if(!ToolClass.playing_player.contains(p)){
+        if(!ToolClass.playing_player.contains(p) && !ToolClass.exercise_player.containsKey(p)){
             return;
         }
 

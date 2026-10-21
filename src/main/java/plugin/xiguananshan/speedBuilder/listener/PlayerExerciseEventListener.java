@@ -19,16 +19,15 @@ import java.util.Random;
 public class PlayerExerciseEventListener implements Listener {
     @EventHandler
     public void run(PlayerInteractEvent e){
-        if((e.getAction() == Action.RIGHT_CLICK_AIR) && (e.getHand() != EquipmentSlot.OFF_HAND)){
+        if((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && (e.getHand() == EquipmentSlot.HAND)){
             if(e.getItem()!=null){
                 if(e.getItem().getType() == Material.SNOWBALL){
                     PersistentDataContainer pdc = e.getItem().getItemMeta().getPersistentDataContainer();
                     if(pdc.has(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class) ,"target"), PersistentDataType.BOOLEAN)){
                         if(Boolean.TRUE.equals(pdc.get(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class), "target"), PersistentDataType.BOOLEAN))){
-                            e.getPlayer().sendMessage(ChatColor.RED + "功能仍在开发");
                             e.setCancelled(true);
-                            return;
-                            /*
+
+
                             int k = 0;
                             while(ToolClass.exercise_player.containsValue(k)){
                                 k++;
@@ -38,7 +37,9 @@ public class PlayerExerciseEventListener implements Listener {
                             assert labby != null;
                             labby.place(new Location(Bukkit.getWorld("world"),30*k,150,0),false, StructureRotation.NONE, Mirror.NONE,0,1,new Random());
                             e.getPlayer().teleport(new Location(Bukkit.getWorld("world"),30*k+3,151,3));
-                            */
+                            e.getPlayer().getInventory().clear();
+                            e.getPlayer().sendMessage(ChatColor.YELLOW + "你现在正在练习，请输入/choose指令选择题目，输入/back取消练习");
+                            e.getPlayer().setGameMode(GameMode.ADVENTURE);
                         }
 
                     }

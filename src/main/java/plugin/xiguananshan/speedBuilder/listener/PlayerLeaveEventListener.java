@@ -38,6 +38,12 @@ public class PlayerLeaveEventListener  implements Listener {
                 }
             }
             ToolClass.exercise_player.remove(e.getPlayer());
+            ToolClass.exercise_player_page.remove(e.getPlayer());
+            ToolClass.exercise_structure.remove(e.getPlayer());
+            ToolClass.exercise_ground.remove(e.getPlayer());
+            if(ToolClass.exercise_timer.containsKey(e.getPlayer()))
+                ToolClass.exercise_timer.get(e.getPlayer()).end();
+
         }
 
     }

@@ -23,6 +23,15 @@ public class CreateMoveCheck implements Runnable {
                 }
 
             }
+            if(ToolClass.exercise_player.containsKey(p)){
+                Integer k = ToolClass.exercise_player.get(p);
+                double x = p.getLocation().getX(),z = p.getLocation().getZ();
+                if(!(30*k<=x&&x<=30*k+15&&0<=z&&z<=15)){
+                    p.teleport(new Location(Bukkit.getWorld("world"),30*k+3,151,3));
+                    p.sendMessage(ChatColor.RED + "你不能离开练习区域");
+                }
+            }
+
         }
         if(ToolClass.creating_player != null){
             double x,z;

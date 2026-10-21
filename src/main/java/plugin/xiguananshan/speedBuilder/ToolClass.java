@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
+import org.bukkit.entity.Display;
 import org.bukkit.entity.Player;
 
 import org.bukkit.inventory.Inventory;
@@ -12,8 +13,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.structure.Structure;
+import plugin.xiguananshan.speedBuilder.ticks.PlayerExerciseTimer;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class ToolClass {
@@ -25,6 +32,7 @@ public class ToolClass {
     public static List<Player> wait_player = new ArrayList<>();
     public static Map<Player,Integer> destroy_tick = new HashMap<>();
     public static Map<Player,Integer> exercise_player = new HashMap<>();
+    public static Map<Player,Integer> exercise_player_page = new HashMap<>();
     public static int start_time = 30;
     public static int ground_page = 1;
     public static List<Player> playing_player = new ArrayList<>();
@@ -41,6 +49,10 @@ public class ToolClass {
     public static ItemStack prev = new ItemStack(Material.ARROW);
     public static ItemStack next = new ItemStack(Material.PAPER);
     public static ItemStack exercise = new ItemStack(Material.SNOWBALL);
+    public static SpeedBuilder PLUGIN = SpeedBuilder.getPlugin(SpeedBuilder.class);
+    public static Map<Player,Structure> exercise_structure = new HashMap<>();
+    public static Map<Player,Structure> exercise_ground = new HashMap<>();
+    public static Map<Player, PlayerExerciseTimer> exercise_timer = new HashMap<>();
     public static void Init(){
         ItemMeta meta = create.getItemMeta();
         assert meta != null;
@@ -131,6 +143,33 @@ public class ToolClass {
         return ans;
     }
 
+    public static Inventory GetProblemInv(int page){
+        Inventory ans = Bukkit.createInventory(null,54,"选择练习题目");
+        List<String> all = GetPageProblem(page);
+        for(int i = 0;i<54;i++){
+            ans.setItem(i,deny);
+        }
+        for(int i = 0;i<all.size();i++){
+            ans.setItem(i,BuildProblemItem(all.get(i)));
+        }
+        ItemStack prev = new ItemStack(Material.ARROW),next = new ItemStack(Material.PAPER);
+        ItemMeta m1 =prev.getItemMeta(),m2 = next.getItemMeta();
+        assert m1!=null && m2 != null;
+        m1.setDisplayName(ChatColor.YELLOW + "上一页");
+        m2.setDisplayName(ChatColor.YELLOW + "下一页");
+        m1.getPersistentDataContainer().set(new NamespacedKey(PLUGIN,"problem_target"),PersistentDataType.BOOLEAN,true);
+        m2.getPersistentDataContainer().set(new NamespacedKey(PLUGIN,"problem_target"),PersistentDataType.BOOLEAN,true);
+        prev.setItemMeta(m1);
+        next.setItemMeta(m2);
+        if(page >= 2){
+            ans.setItem(45,prev);
+        }
+        if(all.size() == 45){
+            ans.setItem(53,next);
+        }
+        return ans;
+    }
+
     public static ItemStack BuildGroundItem(Material material){
         ItemStack ans = new ItemStack(material);
         ItemMeta meta = ans.getItemMeta();
@@ -138,6 +177,40 @@ public class ToolClass {
         meta.setLore(List.of(ChatColor.YELLOW + "点击选择"));
         meta.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"ground"),PersistentDataType.BOOLEAN,true);
         ans.setItemMeta(meta);
+        return ans;
+    }
+
+    public static ItemStack BuildProblemItem(String name){
+        ItemStack ans = new ItemStack(Material.PAPER);
+        ItemMeta meta = ans.getItemMeta();
+        assert meta != null;
+        meta.getPersistentDataContainer().set(new NamespacedKey(SpeedBuilder.getPlugin(SpeedBuilder.class),"problem"),PersistentDataType.STRING,name);
+        meta.setDisplayName(ChatColor.WHITE + name);
+        meta.setLore(List.of(ChatColor.YELLOW + "点击选择"));
+        ans.setItemMeta(meta);
+        return ans;
+    }
+
+    public static List<String> GetPageProblem(int page){
+        Path dir = Paths.get("plugins/buildings");
+        List<File> all_structures = new ArrayList<>();
+        List<String> ans = new ArrayList<>();
+        try(DirectoryStream<Path> stream = Files.newDirectoryStream(dir,"*.nbt")){
+            for(Path entry : stream){
+                if(Files.isRegularFile(entry)){
+                    all_structures.add(entry.toFile());
+                }
+            }
+            for(int i = 45*(page-1);i<45*(page-1)+44;i++){
+                if(i<all_structures.size()){
+                    ans.add(getBaseName(all_structures.get(i)));
+                }else{
+                    break;
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
         return ans;
     }
 }

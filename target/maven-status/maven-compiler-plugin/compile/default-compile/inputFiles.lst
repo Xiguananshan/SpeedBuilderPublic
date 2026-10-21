@@ -1,7 +1,10 @@
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\commands\BackCommand.java
+C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\commands\ChooseCommand.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\commands\EndCommand.java
+C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\commands\ExerciseCommand.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\commands\SetGroundCommand.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\commands\StartCommand.java
+C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\commands\StopCommand.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\listener\BlockPlaceEventListener.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\listener\BlockPositionEventListener.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\listener\DoubleJumpListener.java
@@ -24,5 +27,6 @@ C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuil
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\StairsVisualComparator.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\ticks\CreateMoveCheck.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\ticks\GameMain.java
+C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\ticks\PlayerExerciseTimer.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\ticks\PlayQueueManager.java
 C:\Users\Admin\IdeaProjects\untitled\src\main\java\plugin\xiguananshan\speedBuilder\ToolClass.java

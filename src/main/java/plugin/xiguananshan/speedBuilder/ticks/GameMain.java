@@ -56,6 +56,7 @@ public class GameMain implements Runnable{
                         p.getInventory().clear();
                         p.getInventory().setItem(0, ToolClass.create);
                         p.getInventory().setItem(1, ToolClass.play);
+                        p.getInventory().setItem(2,ToolClass.exercise);
                         p.setGameMode(GameMode.ADVENTURE);
                         ToolClass.is_building = false;
                     }
@@ -66,6 +67,7 @@ public class GameMain implements Runnable{
                         p.getInventory().clear();
                         p.getInventory().setItem(0, ToolClass.create);
                         p.getInventory().setItem(1, ToolClass.play);
+                        p.getInventory().setItem(2,ToolClass.exercise);
                         p.setGameMode(GameMode.ADVENTURE);
                         ToolClass.is_building = false;
                     }
@@ -166,6 +168,35 @@ public class GameMain implements Runnable{
                     ToolClass.now_structure.place(new Location(Bukkit.getWorld("world"),4+30*i,201,4),false, StructureRotation.NONE, Mirror.NONE,0,1.0f,new Random());
 
                     ToolClass.playing_player.get(i).sendTitle(ChatColor.GREEN + "第" + ChatColor.YELLOW + ToolClass.round + ChatColor.GREEN +  "轮",ToolClass.getBaseName(all_structures.get(inx)),10,40,10);
+                    for(int x = 54;x<=60;x++){
+                        for(int z = 54;z<=60;z++){
+                            for(int y = 201;z<=207;z++){
+                                Bukkit.getWorld("world").getBlockAt(x,y,z).setBlockData(Bukkit.createBlockData(Material.AIR),false);
+                            }
+                        }
+                    }
+                    if(ground_dir.exists()){
+
+                        try {
+                            Structure ground = Bukkit.getStructureManager().loadStructure(ground_dir);
+                            ground.place(new Location(Bukkit.getWorld("world"),54,200,54),false,StructureRotation.NONE,Mirror.NONE,0,1,new Random());
+
+                        } catch (IOException e) {
+                            for(int x = 54;x<=60;x++){
+                                for(int z = 54;z<=60;z++){
+                                    Bukkit.getWorld("world").getBlockAt(x,200,z).setBlockData(Bukkit.createBlockData(Material.WHITE_CONCRETE));
+                                }
+                            }
+                        }
+
+                    }else{
+                        for(int x = 54;x<=60;x++){
+                            for(int z = 54;z<=60;z++){
+                                Bukkit.getWorld("world").getBlockAt(x,200,z).setBlockData(Bukkit.createBlockData(Material.WHITE_CONCRETE));
+                            }
+                        }
+                    }
+
                 }
             }
             if(ticks>=102&&ticks<=102+15*20){
@@ -287,6 +318,7 @@ public class GameMain implements Runnable{
                     ToolClass.playing_player.get(i).setGameMode(GameMode.SPECTATOR);
                     ToolClass.playing_player.get(i).sendTitle(ChatColor.YELLOW + "时间结束",ChatColor.GREEN + "进入评分阶段",10,40,10);
                     ToolClass.playing_player.get(i).playSound(ToolClass.playing_player.get(i),Sound.BLOCK_NOTE_BLOCK_HARP,1,1);
+                    ToolClass.now_structure.place(new Location(Bukkit.getWorld("world"),54,201,54),false,StructureRotation.NONE,Mirror.NONE,0,1,new Random());
                 }
             }
             if(ticks == 405 + 20*ToolClass.global_time + 60 && ToolClass.is_building){

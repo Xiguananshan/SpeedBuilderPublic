@@ -38,6 +38,9 @@ public final class SpeedBuilder extends JavaPlugin {
         getCommand("end").setExecutor(new EndCommand());
         getCommand("start").setExecutor(new StartCommand());
         getCommand("set_ground").setExecutor(new SetGroundCommand());
+        getCommand("stop_exercise").setExecutor(new StopCommand());
+        getCommand("exercise").setExecutor(new ExerciseCommand());
+        getCommand("choose").setExecutor(new ChooseCommand());
         getServer().getScheduler().runTaskTimer(this,new CreateMoveCheck(),0,1);
         getServer().getScheduler().runTaskTimer(this,new PlayQueueManager(),0,1);
         getServer().getScheduler().runTaskTimer(this,new GameMain(),0,1);

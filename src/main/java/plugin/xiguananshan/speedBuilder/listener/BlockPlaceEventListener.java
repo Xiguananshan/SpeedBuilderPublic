@@ -38,6 +38,15 @@ public class BlockPlaceEventListener implements Listener {
                 e.getPlayer().sendMessage(ChatColor.RED + "不可修改的方块");
             }
         }
+        if(ToolClass.exercise_player.containsKey(e.getPlayer())){
+            int x = e.getBlock().getX(),y = e.getBlock().getY(),z = e.getBlock().getZ();
+            int index = ToolClass.exercise_player.get(e.getPlayer());
+            if(!(4+30*index<=x&&x<=10+30*index&&151<=y&&y<=157&&4<=z&&z<=10)){
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(ChatColor.RED + "不可修改的方块");
+
+            }
+        }
     }
 }
 

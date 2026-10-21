@@ -12,6 +12,7 @@ plugin\xiguananshan\speedBuilder\listener\PlayerDropItemListener.class
 plugin\xiguananshan\speedBuilder\ToolClass.class
 plugin\xiguananshan\speedBuilder\listener\PlayerQuitPlayingEventListener.class
 plugin\xiguananshan\speedBuilder\commands\BackCommand.class
+plugin\xiguananshan\speedBuilder\commands\StopCommand.class
 plugin\xiguananshan\speedBuilder\listener\PlayerChatEventListener.class
 plugin\xiguananshan\speedBuilder\commands\EndCommand.class
 plugin\xiguananshan\speedBuilder\listener\BlockPlaceEventListener.class
@@ -28,3 +29,6 @@ plugin\xiguananshan\speedBuilder\listener\ExplodeEventListener.class
 plugin\xiguananshan\speedBuilder\listener\PlayerPlayEventListener.class
 plugin\xiguananshan\speedBuilder\StairsVisualComparator$1.class
 plugin\xiguananshan\speedBuilder\listener\BlockPositionEventListener.class
+plugin\xiguananshan\speedBuilder\commands\ExerciseCommand.class
+plugin\xiguananshan\speedBuilder\ticks\PlayerExerciseTimer.class
+plugin\xiguananshan\speedBuilder\commands\ChooseCommand.class

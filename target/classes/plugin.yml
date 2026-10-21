@@ -12,3 +12,9 @@ commands:
     description: Start the game.
   set_ground:
     description: Set the structure ground.
+  choose:
+    description: Choose a exercise problem.
+  exercise:
+    description: Start a exercise.
+  stop_exercise:
+    description: Stop a exercise.
