@@ -166,30 +166,24 @@ public class GameMain implements Runnable{
                         }
                     }
                     ToolClass.now_structure.place(new Location(Bukkit.getWorld("world"),4+30*i,201,4),false, StructureRotation.NONE, Mirror.NONE,0,1.0f,new Random());
-
+                    ToolClass.playing_player.get(i).getInventory().clear();
                     ToolClass.playing_player.get(i).sendTitle(ChatColor.GREEN + "第" + ChatColor.YELLOW + ToolClass.round + ChatColor.GREEN +  "轮",ToolClass.getBaseName(all_structures.get(inx)),10,40,10);
-                    for(int x = 54;x<=60;x++){
-                        for(int z = 54;z<=60;z++){
-                            for(int y = 201;z<=207;z++){
-                                Bukkit.getWorld("world").getBlockAt(x,y,z).setBlockData(Bukkit.createBlockData(Material.AIR),false);
-                            }
+
+
+                }
+                for(int x = 54;x<=60;x++){
+                    for(int z = 54;z<=60;z++){
+                        for(int y = 201;y<=207;y++){
+                            Bukkit.getWorld("world").getBlockAt(x,y,z).setBlockData(Bukkit.createBlockData(Material.AIR),false);
                         }
                     }
-                    if(ground_dir.exists()){
+                }
+                if(ground_dir.exists()){
+                    try {
+                        Structure ground = Bukkit.getStructureManager().loadStructure(ground_dir);
+                        ground.place(new Location(Bukkit.getWorld("world"),54,200,54),false,StructureRotation.NONE,Mirror.NONE,0,1,new Random());
 
-                        try {
-                            Structure ground = Bukkit.getStructureManager().loadStructure(ground_dir);
-                            ground.place(new Location(Bukkit.getWorld("world"),54,200,54),false,StructureRotation.NONE,Mirror.NONE,0,1,new Random());
-
-                        } catch (IOException e) {
-                            for(int x = 54;x<=60;x++){
-                                for(int z = 54;z<=60;z++){
-                                    Bukkit.getWorld("world").getBlockAt(x,200,z).setBlockData(Bukkit.createBlockData(Material.WHITE_CONCRETE));
-                                }
-                            }
-                        }
-
-                    }else{
+                    } catch (IOException e) {
                         for(int x = 54;x<=60;x++){
                             for(int z = 54;z<=60;z++){
                                 Bukkit.getWorld("world").getBlockAt(x,200,z).setBlockData(Bukkit.createBlockData(Material.WHITE_CONCRETE));
@@ -197,6 +191,12 @@ public class GameMain implements Runnable{
                         }
                     }
 
+                }else{
+                    for(int x = 54;x<=60;x++){
+                        for(int z = 54;z<=60;z++){
+                            Bukkit.getWorld("world").getBlockAt(x,200,z).setBlockData(Bukkit.createBlockData(Material.WHITE_CONCRETE));
+                        }
+                    }
                 }
             }
             if(ticks>=102&&ticks<=102+15*20){

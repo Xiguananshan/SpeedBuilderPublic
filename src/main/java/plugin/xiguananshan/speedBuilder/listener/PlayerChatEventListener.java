@@ -39,6 +39,7 @@ public class PlayerChatEventListener implements Listener {
                         p.getInventory().clear();
                         p.getInventory().setItem(0, ToolClass.create);
                         p.getInventory().setItem(1, ToolClass.play);
+                        p.getInventory().setItem(2,ToolClass.exercise);
                         ToolClass.create_structure = null;
                         ToolClass.creating_player = null;
                         p.setGameMode(GameMode.ADVENTURE);
