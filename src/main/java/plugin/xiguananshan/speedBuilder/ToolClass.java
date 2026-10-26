@@ -201,7 +201,8 @@ public class ToolClass {
                     all_structures.add(entry.toFile());
                 }
             }
-            for(int i = 45*(page-1);i<45*(page-1)+44;i++){
+            System.out.println(all_structures.size());
+            for(int i = 45*(page-1);i<=45*(page-1)+44;i++){
                 if(i<all_structures.size()){
                     ans.add(getBaseName(all_structures.get(i)));
                 }else{

@@ -28,6 +28,7 @@ public class PlayerQuitPlayingEventListener implements Listener {
                                 e.getPlayer().sendMessage(ChatColor.GREEN + "你退出了游玩队列");
                                 e.getPlayer().getInventory().setItem(0,ToolClass.create);
                                 e.getPlayer().getInventory().setItem(1,ToolClass.play);
+                                e.getPlayer().getInventory().setItem(2,ToolClass.exercise);
                             }else{
                                 e.getPlayer().sendMessage(ChatColor.RED + "你没在游玩队列当中");
                             }
