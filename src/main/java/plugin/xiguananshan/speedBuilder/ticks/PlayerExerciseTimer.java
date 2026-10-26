@@ -90,6 +90,9 @@ public class PlayerExerciseTimer extends BukkitRunnable {
 
     public List<Integer> end(){
         Integer k = ToolClass.exercise_player.get(p);
+        if(k==null){
+            return new ArrayList<>();
+        }
         int total_block = 0;
         List<BlockState> states = new ArrayList<>();
         for(Palette palette : structure.getPalettes()){
